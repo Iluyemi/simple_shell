@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * process - execute the input on shell
+ * @cmd: input command
+ * Return: 0 if successful
+ */
 int process(char **cmd)
 {
 	pid_t i;

@@ -52,7 +52,7 @@ int main(void)
 		/*takes in command*/
 		getline(&line, &n, stdin);
 		/*tokenization of string*/
-		tokens = strtoking(line);
+		tokens = parse(line);
 		/*execution of tokens*/
 		output = process(tokens);
 	}

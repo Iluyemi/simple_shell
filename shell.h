@@ -9,5 +9,5 @@
 #include <unistd.h>
 
 int process(char **cmd);
-char **parse(char *input);
+char** parse(char* input)
 #endif

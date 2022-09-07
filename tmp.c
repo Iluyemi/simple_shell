@@ -1,65 +1,16 @@
 #include "shell.h"
 
-/**
- * process - execute the input on shell
- * @cmd: input command
- * Return: 0 if successful
- */
-int process(char **cmd)
+int main (int argc __attribute__((unused)), char **argv)
 {
-	pid_t i;
-	int status;
+	char *line;
+	(void) argv;
 
-	if (!cmd)
-	{
-		perror("failed");
-	}
-	/*child process for exec*/
-	i = fork();
-	/*debugging wahala*/
-	if (i == -1)
-	{
-		perror("Fail");
-		return (1);
-	}
-	/*child process*/
-	else if (i == 0)
-	{
-		if (execve(cmd[0], cmd, NULL) == -1)
-		{
-			printf("%s\n", cmd[0]);
-			perror("Issue execuing");
-			exit(-1);
-		}
-	}
-	else
-	/*parent process waiting*/
-		wait(&status);
-	return (0);
-}
-
-/**
- * main - shell function
- * @void: nothing
- * Return: value
- */
-int main(void)
-{
-	size_t n = 0;
-	char *line = NULL;
-	char **tokens;
-	int output;
-
+	signal(SIGINT, ctrl_C);
+	
 	while (1)
 	{
-		/*prompt*/
-		write(1, "($) ", 5);
-		/*takes in command*/
-		getline(&line, &n, stdin);
-		/*tokenization of string*/
-		tokens = parse(line);
-		/*execution of tokens*/
-		output = process(tokens);
+		print(" ($) ", STDOUT_FILENO);
+		line = _getline();
+		/**printf("Inputed line: %s", line);*/
 	}
-	return (0);
 }

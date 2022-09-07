@@ -1,28 +1,25 @@
 #include "shell.h"
 
-void *_realloc(void *ptr, int oldsize, int newsize)
+
+void *_realloc(void *ptr, int old, int new)
 {
 	void *tmp;
 	int i, min;
 
-	if (ptr == NULL)
-	{
-		return (malloc(newsize));
-		return (tmp);
-	}
-	else if (newsize == oldsize)
+	if (!ptr)
+		return (malloc (new));
+	else if (new == old)
 		return (ptr);
-	
-	else if (newsize == 0 && ptr != NULL)
+	else if (new == 0 && ptr)
 	{
-		free(ptr);
+		free (ptr);
 		return (NULL);
 	}
 	else
 	{
-		min = (newsize < oldsize) ? newsize : oldsize;
-		tmp = malloc(newsize);
-		if  (tmp)
+		min = (new < old) ? new : old;
+		tmp = malloc(new);
+		if (tmp)
 		{
 			for (i = 0; i < min; i++)
 				*((char *)tmp + i) = *((char *)ptr + i);
@@ -32,5 +29,4 @@ void *_realloc(void *ptr, int oldsize, int newsize)
 		else
 			return (NULL);
 	}
-	
 }

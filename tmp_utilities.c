@@ -8,10 +8,9 @@ void ctrl_C(int signum)
 
 char *_getline(void)
 {
-	int bufsize = READ_BUF;
-	int no_read, position;
+	int bufSize = READ_BUF, no_read, position = 0;
 
-	char *buffer = malloc(bufsize * sizeof(char));
+	char *buffer = malloc(bufSize * sizeof(char));
 	char c;
 
 	if (buffer == NULL)
@@ -24,6 +23,9 @@ char *_getline(void)
 		no_read = read(STDIN_FILENO, &c, 1);
 		if (c == EOF || !no_read)
 		{
+			/* checks if the input is EOT 
+			 	(ctrl+D) and if it is from the terminal
+			*/
 			if (isatty(STDIN_FILENO) == 1)
 			{
 				print("\n", STDIN_FILENO);
@@ -36,19 +38,18 @@ char *_getline(void)
 			return (buffer);
 		}
 		else
-		{
 			buffer[position] = c;
-		}
 		position++;
-		if (position >= bufsize)
+
+		if (position >= bufSize)
 		{
-			bufsize += READ_BUF;
-			buffer = _realloc(buffer, READ_BUF, bufsize);
+			bufSize += READ_BUF;
+			buffer = _realloc(buffer, READ_BUF, bufSize);
 			if (!buffer)
 			{
-				perror("Failed to re-allocate a space in memory");
+				perror("Failed to re-allocate a space in the memory");
 				exit(EXIT_FAILURE);
 			}
 		}
-}
+	}
 }
